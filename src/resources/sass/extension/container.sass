@@ -1,0 +1,17 @@
+.content-container
+  width: 100%
+  height: 100%
+  background-color: #fff
+  &.is-hidden
+    display: none
+  &.is-flex
+    display: flex
+    display: -webkit-flex
+  &.is-column
+    flex-direction: column
+    -webkit-flex-direction: column
+  .is-auto
+    flex: 2
+    overflow: hidden
+  &.is-bordered
+    border: 1px solid $border

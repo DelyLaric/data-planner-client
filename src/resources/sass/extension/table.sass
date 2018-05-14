@@ -1,0 +1,90 @@
+.table
+  margin-bottom: 0
+  &.is-centered
+    th,
+    td
+      text-align: center
+      vertical-align: middle
+  &.is-left
+    th,
+    td
+      text-align: left
+
+  &.is-bordered
+    thead
+      background-color: #f5f7fa
+
+  &.is-nowraped
+    th,
+    td
+      white-space: nowrap
+  &.is-hoverable
+    tbody
+      tr:not(.is-selected)
+        &:hover
+          background-color: #f2f6ff
+      tr.is-hovered
+          background-color: #f2f6ff
+  tr.is-selected
+    color: $text
+    background-color: #f2f6ff
+    td
+      border-color: $border
+  th,
+  td
+    &.is-error
+      outline-color: $danger
+    &.is-editable
+      -webkit-user-modify: read-write-plaintext-only
+    &.is-editable,
+    &.is-selectable,
+      outline: 1px solid transparent
+      &:hover
+        cursor: pointer
+        background-color: #f2f6ff
+      &:focus,
+      &.is-focus
+        cursor: text
+        outline-color: $primary
+
+    &.is-centered
+      text-align: center
+      vertical-align: middle
+
+    &.is-selectable
+      position: relative
+      &::after
+        +arrow($primary)
+        border-color: transparent
+        margin-top: -0.375em
+        right: 1em
+        top: 50%
+        z-index: 4
+      &:hover
+        &::after
+          border-color: $primary
+      &.is-focus
+        .dropdown-menu
+          display: block
+
+    &.select
+      &::after
+        +arrow($input-arrow)
+        margin-top: -0.375em
+        right: 1.125em
+        top: 50%
+        z-index: 4
+
+.table-container
+  overflow: auto
+  height: 100%
+  border: 1px solid $border
+  .is-bordered
+    thead
+      th,
+      td
+        border-top: none
+    th,
+    td
+      &:first-child
+        border-left: none

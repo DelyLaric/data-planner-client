@@ -1,0 +1,133 @@
+// 过度动画
+@import '~animate.css'
+.animated
+  animation-duration: .333s
+
+// 预定义样式
+
+// iconfont 引用
+@import url("//at.alicdn.com/t/font_433051_izdfcbpartpam7vi.css")
+
+=block
+  &:not(:last-child)
+    margin-bottom: 1.5rem
+
+// 主色调 #5B88DB #5B95FE
+@import 'config.sass'
+@import '~bulma'
+@import 'extension/_all'
+
+.rightbar-is-active
+  margin-right: 280px
+
+.app
+  display: flex
+  flex-flow: column
+  height: 100vh
+  width: 100vw
+  overflow: hidden
+
+.app-header
+  height: 36px
+  display: flex
+  align-items: center
+  background: #fff
+  padding-left: 12px
+  border-bottom: 1px solid $border
+
+.app-body
+  flex: 2
+  display: flex
+  flex-flow: row
+
+.app-sidebar
+  width: 200px
+  z-index: 1
+  background: #FFF
+  overflow-y: auto
+  overflow-x: hidden
+  // border-right: 1px solid $border
+
+.rightbar
+  top: 0
+  right: 0
+  width: 280px
+  z-index: 100
+  height: 100vh
+  padding: 12px
+  position: fixed
+  overflow-y: auto
+  overflow-x: hidden
+  background-color: #FFF
+  border-left: 1px solid $border
+
+.app-main
+  flex: 2
+  z-index: 20
+  border-left: 1px solid $border
+  overflow: hidden
+  background: #fff
+
+.is-inline
+  display: inline
+
+.login-dialog
+  position: absolute
+  padding: 16px 28px 28px 28px
+  box-shadow: $box-shadow
+  border-radius: 6px
+  width: 320px
+  left: calc(50% - 160px)
+  top: calc(30%)
+  background: #fff
+
+// editable table
+
+// pagination
+.pagination-link,
+.pagination-previous,
+.pagination-next
+  color: $grey-darker
+
+// loading-bar
+.loading-bar
+  width: 100%
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  z-index: 1000
+
+  &-inner
+    transition: width .2s linear
+
+    &-color-primary
+      background-color: $primary
+
+    &-failed-color-error
+      background-color: $danger
+
+// notice
+.notifications
+  position: fixed
+  top: 8px
+  left: calc(50% - 120px)
+  z-index: 3000
+  pointer-events: none
+
+.notification
+  position: relative
+  text-align: center
+  padding: 4px 18px
+  min-width: 240px
+  backface-visibility: hidden
+  pointer-events: all
+  background-color: #fff
+  box-shadow: $box-shadow
+
+.is-unselectable
+  -webkit-user-select: none /* Chrome all / Safari all */
+  -moz-user-select: none /* Firefox all */
+  -ms-user-select: none /* IE 10+ */
+  -o-user-select: none
+  user-select: none

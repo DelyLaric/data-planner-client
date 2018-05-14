@@ -1,0 +1,37 @@
+.loading {
+  width: 100px;
+  height: 101px;
+  border: 8px solid;
+  border-top-color: hsl(154,100%,31%);
+  border-left-color: hsl(216,87%,52%);
+  border-bottom-color: hsl(8,66%,50%);
+  border-right-color: hsl(42,100%,51%);
+  border-radius: 50%;
+  transform: rotate(45deg);
+  margin: 30px auto;
+}
+.loading p {
+  display: inline-block;
+  width: 107px;
+  height: 107px;
+  /* The background is used to specify the border background */
+  background: linear-gradient(90deg, hsla(212,67%,36%,0) 0%,
+                                         hsla(207,69%,51%,0) 76%,
+                                         hsla(0,0%,100%,1) 85%,
+                                         hsla(0,0%,100%,1) 100%); /* W3C */
+  /* Background origin is the padding box by default.
+  Override to make the background cover the border as well. */
+  -moz-background-origin: border;
+  background-origin: border-box;
+  /* A transparent border determines the width */
+  border: 6px solid transparent;
+  border-radius: 50%;
+  box-shadow: inset -999px 0 0 #fff; /* The background color */
+  transform: translate(-8px, 55px);
+  animation: loading 1s linear infinite;
+}
+
+@keyframes loading {
+    0% { transform: translate(-9px, -25px) rotate(0deg); }
+  100% { transform: translate(-9px, -25px) rotate(360deg); }
+}
