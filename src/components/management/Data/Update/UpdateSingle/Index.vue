@@ -1,118 +1,120 @@
 <template>
-  <div>
-    <FormField
-      v-for="(item, key) in columns"
-      :field="item"
-      :key="key"
-    />
+  <div v-if="data">
+    <IntelliForm :schema="schema" :loading="loading"/>
 
-    <a class="button is-link" @click="click">
-      {{page.button}}
-    </a>
+    <Modal v-model="showConfirm">
+      <p slot="title">更新确认</p>
 
-    <a class="button" @click="reset">
-      重置
-    </a>
+      <table class="table is-nowraped is-centered is-fullwidth is-bordered">
+        <thead>
+          <th>字段</th>
+          <th>修改前</th>
+          <th>修改后</th>
+        </thead>
+        <tbody>
+          <tr
+            v-for="field in confirmFields"
+            :key="field.name"
+          >
+            <td>{{field.title}}</td>
+            <td>{{field.old_value}}</td>
+            <td>{{field.value}}</td>
+          </tr>
+        </tbody>
+      </table>
 
-    <TheConfirmer
-      :show="showConfirmer"
-      :fields="changedColumns"
-      @close="showConfirmer = false"
-      @confirmed="update"
-    />
+      <Button
+        slot="foot"
+        color="primary"
+        :loading="loading"
+        @click="updateData"
+        style="margin-right: 0px"
+      >
+        确认更新
+      </Button>
+      <Button
+        slot="foot"
+        style="margin-left: 8px"
+        @click="showConfirm = false"
+      >
+        取消
+      </Button>
+    </Modal>
   </div>
 </template>
 
 <script>
-import FormField from '../../../common/FormField'
-import TheConfirmer from './Confirmer'
+import IntelliForm from '@/components/form'
 
 export default {
   components: {
-    FormField,
-    TheConfirmer
+    IntelliForm
   },
 
-  inject: ['dataSource', 'page'],
+  inject: ['tableSchema', 'formSchema', 'dataSource'],
 
-  data () {
-    return {
-      showConfirmer: false,
-
-      columns: this.page.columns.map(column => ({
-        ...column, $value: undefined, $oldValue: undefined
-      })),
-
-      changedColumns: []
-    }
-  },
+  data: () => ({
+    params: [],
+    loading: false,
+    confirmFields: [],
+    showConfirm: false
+  }),
 
   computed: {
+    schema () {
+      return {
+        data: this.data,
+        fields: this.formSchema.fields,
+        submit: {
+          title: this.formSchema.title,
+          handler: this.handleSubmit
+        },
+        reset: '重置',
+        validation: {
+          event: 'submit'
+        }
+      }
+    },
+
     data () {
       return this.dataSource.$getters('selectedData')
     }
   },
 
-  watch: {
-    data (val) {
-      this.setOldData()
-    }
-  },
-
   methods: {
-    getParams,
-    setOldData,
-    getChangedColumns,
+    async handleSubmit (params) {
+      this.showConfirm = true
+      this.params = params
+      this.getConfirmFields()
+    },
 
-    reset () {
-      this.getChangedColumns()
-      this.changedColumns.forEach(column => {
-        column.class !== 'auto' && (
-          column.$value = column.$oldValue
-        )
+    getConfirmFields () {
+      this.confirmFields = this.params.reduce((res, param) => {
+        let field = this.formSchema.fields.find(field => field.name === param.name)
+        res.push({
+          name: param.name,
+          title: field.title,
+          value: param.value,
+          old_value: param.old_value
+        })
+        return res
+      }, [])
+      this.showConfirm = true
+    },
+
+    async updateData () {
+      this.loading = true
+      this.showConfirm = false
+      let {data: {data}} = await this.$http.post('data/update', {
+        view: this.tableSchema.dataSource.table,
+        table: this.formSchema.table,
+        namespace: this.formSchema.namespace,
+        id: this.data._id,
+        columns: this.params
       })
-    },
-
-    click () {
-      this.getChangedColumns()
-      this.showConfirmer = true
-    },
-
-    async update () {
-      let {data: {data}} = await this.$http.post('data/update', this.getParams())
       this.dataSource.$commit('updateSelected', data)
+      this.loading = false
     }
-  },
-
-  created () {
-    this.setOldData()
   }
-}
-
-function setOldData () {
-  this.columns.forEach(column => {
-    column.$oldValue = this.data[column.name]
-    if (column.class === 'auto') return
-    column.$value = this.data[column.name]
-  })
-}
-
-function getParams () {
-  return {
-    view: this.dataSource.view,
-    id: this.data._id,
-    table: this.page.table,
-    columns: this.changedColumns.map(column => ({
-      name: column.name,
-      value: column.$value,
-      old_value: column.$oldValue
-    }))
-  }
-}
-
-function getChangedColumns () {
-  this.changedColumns = this.columns.filter(column =>
-    column.$value !== this.data[column.name]
-  )
 }
 </script>

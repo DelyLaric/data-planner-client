@@ -2,7 +2,7 @@
   <div class="columns">
     <div
       class="column is-narrow"
-      style="width: 112px; padding-bottom: 8px"
+      style="padding-bottom: 8px; padding-right: 0;"
     >
       <ButtonList>
         <ButtonListItem
@@ -17,17 +17,19 @@
           @click="container.$commit('toggleTableQuery')"
         />
 
-        <ButtonListItem
+        <!-- <ButtonListItem
           icon="download"
-        />
+        /> -->
       </ButtonList>
     </div>
-    <div class="column is-narrow" style="padding-bottom: 8px">
+    <div
+      class="column is-narrow"
+      style="padding-bottom: 8px; padding-left: 0"
+    >
       <ButtonList>
         <ButtonListItem
           v-for="form in tableSchema.forms"
           :key="form.name"
-
           :icon="form.icon"
           :title="form.title"
           :active="container.$state('table.rightbar') === form.title"

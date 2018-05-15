@@ -4,7 +4,7 @@
 
 <script>
 import schema from './schema'
-import Management from '@/components/management-new'
+import Management from '@/components/management'
 
 export default {
   components: {

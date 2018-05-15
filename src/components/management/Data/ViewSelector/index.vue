@@ -1,41 +1,41 @@
 <template>
-  <div
-    v-if="table.views.length > 1"
-    style="padding: 4px;"
-    class="control"
+  <Control
+    v-if="views.length > 1"
+    class="is-unselectable"
+    style="padding: 4px; padding-top: 0; padding-bottom: 8px"
   >
     <label
-      v-for="view in table.views"
-      :key="view.title"
+      v-for="view in views"
+      :key="view.label"
       class="radio"
+      @click="select(view.label)"
     >
-      <input
-        type="radio"
-        @click="select(view.title)"
-        :checked="container.$state('data.table.view') === view.title"
-      >
-      {{view.title}}
+      <Radio
+        :checked="container.$state('table.view') === view.label"
+      />
+      {{view.label}}
     </label>
-
-    <Divider height="4px" />
-  </div>
+  </Control>
 </template>
 
 <script>
 export default {
-  inject: ['table', 'container'],
+  inject: ['container', 'tableSchema'],
+
+  data () {
+    return {
+      views: this.tableSchema.views
+    }
+  },
 
   methods: {
     select (name) {
-      this.container.$commit('select', {
-        view: 'data.table.view',
-        name: name
-      })
+      this.container.$commit('selectTableView', name)
     }
   },
 
   created () {
-    this.select(this.table.views[0].title)
+    this.select(this.views[0].label)
   }
 }
 </script>

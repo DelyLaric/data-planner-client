@@ -1,6 +1,8 @@
 <template>
   <Container auto paddingless>
-    <ViewSelector />
+    <!-- <IntelliForm :schema="schema" /> -->
+
+    <!-- <ViewSelector />
 
     <DataView v-show="isCurrentView('data')" class="is-auto" />
 
@@ -8,35 +10,38 @@
 
     <DataFooter v-show="isCurrentView('data')" />
 
-    <ExcelLoader v-show="isCurrentView('excel') "/>
+    <ExcelLoader v-show="isCurrentView('excel') "/> -->
   </Container>
 </template>
 
 <script>
-import DataView from './DataView'
-import DataFooter from './DataFooter'
-import ExcelLoader from './ExcelLoader'
-import ViewSelector from './ViewSelector'
+// import DataView from './DataView'
+// import DataFooter from './DataFooter'
+// import ExcelLoader from './ExcelLoader'
+// import ViewSelector from './ViewSelector'
 
 export default {
-  components: {
-    DataView,
-    DataFooter,
-    ExcelLoader,
-    ViewSelector
-  },
+  created () {
 
-  inject: ['container'],
-
-  data () {
-    return {
-    }
-  },
-
-  methods: {
-    isCurrentView (name) {
-      return this.container.$state('upload.view') === name
-    }
   }
+  // components: {
+  //   DataView,
+  //   DataFooter,
+  //   ExcelLoader,
+  //   ViewSelector
+  // },
+
+  // inject: ['container'],
+
+  // data () {
+  //   return {
+  //   }
+  // },
+
+  // methods: {
+  //   isCurrentView (name) {
+  //     return this.container.$state('upload.view') === name
+  //   }
+  // }
 }
 </script>

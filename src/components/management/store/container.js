@@ -4,24 +4,34 @@ export default {
   state () {
     return {
       'tab': false,
-      'data.addon': false,
-      'data.table.view': false,
-      'data.rightbar': false,
-      'upload.view': false
+
+      'table.view': false,
+      'table.query': false,
+      'table.rightbar': false,
+
+      'record.params': {}
     }
   },
 
   mutations: {
-    select (state, {view, name}) {
-      state[view] = name
+    selectTab (state, tab) {
+      state.tab = tab
     },
 
-    toggle (state, {view, name}) {
-      state[view] = (state[view] === name) ? false : name
+    selectTableView (state, view) {
+      state['table.view'] = view
     },
 
-    hide (state) {
-      state.view = false
+    toggleTableQuery (state, view) {
+      state['table.query'] = !state['table.query']
+    },
+
+    toggleTableRightbar (state, view) {
+      state['table.rightbar'] = (view === state['table.rightbar'] ? false : view)
+    },
+
+    setRecordParams (state, params) {
+      state['record.params'] = params
     }
   }
 }

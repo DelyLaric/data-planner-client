@@ -6,7 +6,12 @@ export default {
 
   state () {
     return {
-      view: false,
+      params: {
+        table: '',
+        page: 1,
+        pageSize: 50,
+        where: []
+      },
 
       dataSource: {},
 
@@ -35,6 +40,10 @@ export default {
       return state.collected.map(key => {
         return getters.data[key]
       })
+    },
+
+    params (state) {
+      return state.params
     }
   },
 
@@ -47,12 +56,12 @@ export default {
       state.collected = pointers
     },
 
-    setView (state, view) {
-      state.view = view
+    setPage (state, page) {
+      state.params.page = page
     },
 
-    setParams (state, params) {
-      state.params = params
+    setQuery (state, where) {
+      state.params.where = where
     },
 
     updateSelected (state, data) {
@@ -77,20 +86,35 @@ export default {
   },
 
   actions: {
-    async initialize ({state, dispatch}) {
-      await dispatch('getDataSource')
+    async initialize ({state, dispatch}, {table}) {
+      // 违规操作
+      state.params.table = table
+      await dispatch('refresh')
 
+      // 违规操作
       state.initialized = true
     },
 
-    async getDataSource ({state}) {
+    async refresh ({state, dispatch}) {
+      state.params.page = 1
+      await dispatch('getDataSource')
+    },
+
+    async changePage ({state, dispatch}, page) {
+      state.params.page = page
+      await dispatch('getDataSource')
+    },
+
+    async getDataSource ({state, getters}) {
+      // 违规操作
+
       state.pending = true
       state.selected = undefined
       state.collected = []
-      let {data: dataSource} = await http.post('data/search', {
-        view: state.view,
-        ...state.params
-      })
+      let {data: dataSource} = await http.post(
+        'data/search', getters.params
+      )
+      // 违规操作
       state.dataSource = dataSource
       dataSource.data.length && (state.selected = 0)
       state.pending = false

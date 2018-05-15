@@ -16,6 +16,7 @@ import Title from './Title'
 import Select from './Form/Select'
 import Option from './Form/Option'
 
+import Radio from './Form/Radio'
 import Field from './Form/Field'
 import Control from './Form/Control'
 import Label from './Form/Label'
@@ -48,7 +49,7 @@ export default {
 
     Vue.component('Select', Select)
     Vue.component('Option', Option)
-
+    Vue.component('Radio', Radio)
     Vue.component('Control', Control)
     Vue.component('Error', FieldError)
     Vue.component('Field', Field)

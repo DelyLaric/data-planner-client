@@ -1,6 +1,5 @@
 <template>
-  <component :is="component">
-  </component>
+  <component :is="component" />
 </template>
 
 <script>
@@ -14,6 +13,16 @@ import TheSingle from './UpdateSingle'
 
 export default {
   inject: ['dataSource'],
+
+  provide () {
+    return {
+      formSchema: this.formSchema
+    }
+  },
+
+  props: {
+    formSchema: Object
+  },
 
   computed: {
     component () {

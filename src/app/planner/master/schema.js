@@ -182,6 +182,16 @@ export default {
     ]
   },
 
+  import: {
+    table: 'data.master',
+    columns: [
+      { column: 'part_id', title: '零件号' },
+      { column: 'fitmentpoint', title: '工位' },
+      { column: 'a_kolli_id', title: '包装代码' },
+      { column: 'a_kolli_fillings', title: '包装数量' }
+    ]
+  },
+
   records: {
     table: 'data.master',
     columns: [

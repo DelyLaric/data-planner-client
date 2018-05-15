@@ -13,17 +13,6 @@ const production = [
     title: '零件数据表',
     icon: 'table',
     route: '/planner/parts'
-  },
-  {
-    title: '系统设置',
-    icon: 'gear',
-    children: [
-      {
-        title: '系统备份',
-        icon: 'backup',
-        route: '/'
-      }
-    ]
   }
 ]
 

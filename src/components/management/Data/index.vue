@@ -1,53 +1,75 @@
 <template>
   <!-- initialized  为模块的数据源 -->
-  <Container auto paddingless
+  <Container column flex padding="6px"
     v-if="dataSource.$state('initialized')"
-    :width="container.$state('data.rightbar') ? 'calc(100% - 278px)' : '100%'"
+    :width="container.$state('table.rightbar') ? 'calc(100% - 278px)' : '100%'"
   >
-    <Container flex column paddingless>
-      <TheHeader />
+    <TheHeader />
 
-      <TheAddon />
+    <TheQuery v-show="container.$state('table.query')"/>
 
-      <ViewSelector />
+    <ViewSelector />
 
-      <Container auto paddingless>
-        <TheTable />
-      </Container>
+    <div class="is-auto">
+      <div class="table-container">
+        <div v-show="!pending">
+          <DataView
+            v-for="view in tableSchema.views"
+            v-show="container.$state('table.view') === view.label"
+            :key="view.title"
+            :view="view"
+          />
+        </div>
+      </div>
+    </div>
 
-      <Divider height="4px" />
+    <Divider height="6px" />
 
-      <Pagination />
+    <Pagination />
 
-      <TheRight />
-    </Container>
+    <TheRight />
   </Container>
 </template>
 
 <script>
-import TheTable from './DataTable'
-import TheAddon from './Containers/TheAddon'
-import TheRight from './Containers/TheRight'
-import TheHeader from './Containers/TheHeader'
+import DataView from './DataView'
+import TheHeader from './containers/header'
+import TheRight from './containers/right'
+import TheQuery from './Query'
+import TheRecords from './Records'
+
 import ViewSelector from './ViewSelector'
 import Pagination from './Pagination'
 
 export default {
   components: {
-    TheAddon,
-    TheTable,
-    TheRight,
+    DataView,
     TheHeader,
+    TheRight,
+    TheQuery,
+    TheRecords,
     ViewSelector,
     Pagination
   },
 
-  inject: ['container', 'dataSource', 'query'],
+  inject: ['dataSource', 'container', 'tableSchema'],
+
+  provide () {
+    return {
+      'querySchema': this.tableSchema.query
+    }
+  },
+
+  computed: {
+    pending () {
+      return this.dataSource.$state('pending')
+    }
+  },
 
   created () {
-    this.dataSource.$commit('setParams', this.query.$getters('params'))
-    this.dataSource.$commit('setView', this.dataSource.view)
-    this.dataSource.$dispatch('initialize')
+    this.dataSource.$dispatch('initialize', {
+      table: this.tableSchema.dataSource.table
+    })
   }
 }
 </script>

@@ -1,70 +1,55 @@
 <template>
-  <div>
-    <FormField
-      v-for="(field, key) in columns"
-      :field="field"
-      :key="key"
-    />
-
-    <a class="button is-primary" @click="submit">
-      {{page.button}}
-    </a>
-
-    <div>
-
-    </div>
-  </div>
+  <IntelliForm :schema="schema" />
 </template>
 
 <script>
-import FormField from '../../common/FormField'
+import IntelliForm from '@/components/form'
 
 export default {
   components: {
-    FormField
+    IntelliForm
   },
 
-  inject: ['page', 'dataSource'],
+  inject: ['tableSchema', 'dataSource'],
 
   props: {
-    test: {}
-  },
-
-  data () {
-    return {
-      columns: this.page.columns.map(column => ({
-        ...column, $value: undefined
-      }))
-    }
+    formSchema: Object
   },
 
   computed: {
-    params,
-    changedColumns
+    schema () {
+      return {
+        fields: this.formSchema.fields,
+
+        submit: {
+          title: this.formSchema.submit,
+          error: 'fail',
+          handler: this.handleSubmit
+        },
+
+        reset: '重置',
+
+        validation: {
+          event: 'blur'
+        }
+      }
+    }
   },
 
   methods: {
-    async submit () {
-      let {data: {data}} = await this.$http.post('data/create', this.params)
+    async handleSubmit (params) {
+      await this.createData(params)
+      this.dataSource.$dispatch('refresh')
+    },
 
-      this.dataSource.$commit('unshiftData', data)
+    async createData (params) {
+      await this.$http.post('data/create', {
+        view: this.tableSchema.dataSource.table,
+        namespace: this.formSchema.namespace,
+        table: this.formSchema.table,
+        columns: params
+      })
     }
   }
 }
-
-function changedColumns () {
-  return this.columns.filter(column => column.$value !== undefined)
-}
-
-function params () {
-  return {
-    view: this.dataSource.view,
-    table: this.page.table,
-    columns: this.changedColumns.map(column => ({
-      name: column.name,
-      value: column.$value
-    }))
-  }
-}
-
 </script>
