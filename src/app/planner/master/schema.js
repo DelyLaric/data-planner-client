@@ -97,7 +97,7 @@ export default {
         options: [
           { class: 'input', field: 'part_id', title: '零件号', operators: ['=', 'like'] },
           { class: 'input', field: 'fitmentpoint', title: '工位', operators: ['=', 'like'] },
-          { class: 'date', field: 'due_time', title: '截止日期', operators: ['='] }
+          { class: 'date', field: 'duetime', title: '截止日期', operators: ['='] }
         ]
       },
 
@@ -171,10 +171,10 @@ export default {
             default: data => data.status,
             class: 'select', column: 'status', name: 'status', title: '状态',
             options: [
-              { value: 'todo', title: 'todo' },
-              { value: 'ongoing', title: 'onGoing' },
-              { value: 'draft', title: 'draft' },
-              { value: 'finish', title: 'finish' }
+              { value: 'todo', title: '待规划' },
+              { value: 'ongoing', title: '规划中' },
+              { value: 'draft', title: '已规划' },
+              { value: 'finish', title: '已弃用' }
             ]
           }
         ]

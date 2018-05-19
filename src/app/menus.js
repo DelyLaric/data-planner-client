@@ -13,7 +13,17 @@ const production = [
     title: '零件数据表',
     icon: 'table',
     route: '/planner/parts'
+  },
+  {
+    title: '个人设置',
+    icon: 'user-settings',
+    route: '/user/settings'
   }
+  // {
+  //   title: '用户设置',
+  //   icon: 'table',
+  //   route: '/user-settings'
+  // }
 ]
 
 export default Array.concat(

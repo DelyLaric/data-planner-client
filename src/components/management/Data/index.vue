@@ -36,7 +36,6 @@ import DataView from './DataView'
 import TheHeader from './containers/header'
 import TheRight from './containers/right'
 import TheQuery from './Query'
-import TheRecords from './Records'
 
 import ViewSelector from './ViewSelector'
 import Pagination from './Pagination'
@@ -47,7 +46,6 @@ export default {
     TheHeader,
     TheRight,
     TheQuery,
-    TheRecords,
     ViewSelector,
     Pagination
   },
@@ -66,8 +64,8 @@ export default {
     }
   },
 
-  created () {
-    this.dataSource.$dispatch('initialize', {
+  async created () {
+    await this.dataSource.$dispatch('initialize', {
       table: this.tableSchema.dataSource.table
     })
   }

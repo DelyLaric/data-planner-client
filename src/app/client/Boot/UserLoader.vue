@@ -5,7 +5,7 @@ export default {
   inject: ['system'],
 
   created () {
-
+    this.system.$dispatch('getTokenFromStore')
   }
 }
 </script>

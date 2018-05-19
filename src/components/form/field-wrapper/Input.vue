@@ -1,7 +1,24 @@
 <template>
   <Field>
     <Label>{{title}}</Label>
-    <Control>
+    <Control
+      :hasIconsLeft="hasIconsLeft"
+      :hasIconsRight="hasIconsRight"
+    >
+      <Icon
+        v-if="hasIconsLeft"
+        size="small"
+        :isLeft="hasIconsLeft"
+        :isRight="hasIconsRight"
+        :name="leftIcon"
+      />
+      <Icon
+        v-if="hasIconsRight"
+        size="small"
+        :isLeft="hasIconsLeft"
+        :isRight="hasIconsRight"
+        :name="rightIcon"
+      />
       <Input
         :value="value"
         :color="color"
@@ -83,6 +100,22 @@ export default {
 
     isValidated () {
       return this.field._isValidated
+    },
+
+    leftIcon () {
+      return this.field.leftIcon
+    },
+
+    hasIconsLeft () {
+      return Boolean(this.leftIcon)
+    },
+
+    hasIconsRight () {
+      return Boolean(this.rightIcon)
+    },
+
+    rightIcon () {
+      return this.field.rightIcon
     },
 
     color () {

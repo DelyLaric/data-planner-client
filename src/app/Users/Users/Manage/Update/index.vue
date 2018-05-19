@@ -38,9 +38,7 @@ export default {
 
         submit: {
           title: '更新用户',
-          handler (params) {
-            console.log(params)
-          }
+          handler: this.handleSubmit
         },
 
         reset: '重置表单',

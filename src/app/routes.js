@@ -2,6 +2,8 @@ import Homepage from './client/Homepage'
 import Users from './Users'
 import MasterPlanner from './planner/master'
 import PartsPlanner from './planner/parts'
+import Login from './client/Login'
+import UserSettings from './UserSettings'
 
 const production = [
   {
@@ -23,10 +25,22 @@ const production = [
 
 export default [
   {
+    path: '/login',
+    name: 'login',
+    component: Login
+  },
+  {
     path: '/',
     name: 'home page',
     component: Homepage,
     children: Array.concat(
+      [
+        {
+          path: '/user/settings',
+          name: 'user settings',
+          component: UserSettings
+        }
+      ],
       production
     )
   }

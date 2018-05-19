@@ -29,7 +29,7 @@ export default {
     },
 
     meta (state, getters) {
-      return state.dataSource
+      return state.dataSource.meta
     },
 
     selectedData (state, getters) {

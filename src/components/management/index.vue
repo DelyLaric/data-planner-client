@@ -91,6 +91,11 @@ export default {
 
   created () {
     this.selectTab()
+  },
+
+  beforeDestroy () {
+    this.$store.unregisterModule(this.namespace + 'table')
+    this.$store.unregisterModule(this.namespace + 'container')
   }
 }
 </script>

@@ -15,6 +15,7 @@
           color="primary"
           :loading="isLoading"
           @click="handleSubmit"
+          :class="schema.submit.class"
         >
           {{schema.submit.title}}
         </Button>

@@ -4,6 +4,7 @@
       'button',
       'is-' + color,
       'is-' + size,
+      rounded ? 'is-rounded': false,
       loading ? 'is-loading' : false,
       fullwidth ? 'is-fullwidth' : false
     ]"
@@ -34,6 +35,11 @@ export default {
     },
 
     fullwidth: {
+      type: Boolean,
+      default: false
+    },
+
+    rounded: {
       type: Boolean,
       default: false
     },

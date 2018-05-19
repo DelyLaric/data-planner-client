@@ -1,6 +1,7 @@
 <template>
   <span :class="[
-    'icon', 'has-text-' + color, 'is-' + size
+    'icon', 'has-text-' + color, 'is-' + size,
+    !isLeft || 'is-left', !isRight || 'is-right'
   ]">
     <i :class="['iconfont', 'icon-' + name]" />
   </span>
@@ -16,6 +17,16 @@ export default {
     size: {
       type: String,
       default: 'normal'
+    },
+
+    isLeft: {
+      type: Boolean,
+      default: false
+    },
+
+    isRight: {
+      type: Boolean,
+      default: false
     },
 
     name: {

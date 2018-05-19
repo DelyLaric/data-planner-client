@@ -13,12 +13,17 @@ export default {
 
   provide () {
     return {
+      system: this.$getLocalStore('system'),
       homepage: this.$getLocalStore('homepage')
     }
   },
 
   components: {
     Boot
+  },
+
+  created () {
+
   }
 }
 </script>
