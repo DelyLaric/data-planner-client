@@ -17,7 +17,10 @@ export default {
 
 function setHttpConfig () {
   http.interceptors.request.use((config) => {
-    this.$loading.start()
+    if (config.method !== 'option') {
+      this.$loading.start()
+    }
+
     return config
   }, function (error) {
     return Promise.reject(error)

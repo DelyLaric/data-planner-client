@@ -27,6 +27,8 @@ import FieldError from './Form/Error'
 import Loading from './Loading'
 import Message from './Message'
 
+import RadioTable from './Form/RadioTable'
+
 export default {
   install (Vue, opts = {}) {
     Vue.component('AsyncButton', Button.Async)
@@ -56,6 +58,8 @@ export default {
     Vue.component('FieldBody', FieldBody)
     Vue.component('FieldLabel', FieldLabel)
     Vue.component('Label', Label)
+
+    Vue.component('RadioTable', RadioTable)
 
     Vue.prototype.$loading = Loading
     Vue.prototype.$message = Message

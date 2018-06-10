@@ -1,6 +1,6 @@
 <template>
   <Field>
-    <Label>{{title}}</Label>
+    <Label>{{label}}</Label>
     <Control>
       <Select :color="color" :value="value" @change="setValue" fullwidth>
         <Option
@@ -8,7 +8,7 @@
           :value="option.value"
           :key="option.value"
         >
-          {{option.title}}
+          {{option.label}}
         </Option>
       </Select>
     </Control>
@@ -26,8 +26,8 @@ export default {
       return this.field._value
     },
 
-    title () {
-      return this.field.title
+    label () {
+      return this.field.label
     },
 
     options () {

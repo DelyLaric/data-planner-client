@@ -10,9 +10,19 @@ const production = [
     route: '/planner/master'
   },
   {
-    title: '零件数据表',
+    title: '零件数据',
     icon: 'table',
-    route: '/planner/parts'
+    route: '/planner/part'
+  },
+  {
+    title: '供应商数据',
+    icon: 'table',
+    route: '/planner/supplier'
+  },
+  {
+    title: '工位信息',
+    icon: 'table',
+    route: '/planner/line'
   },
   {
     title: '个人设置',

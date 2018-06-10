@@ -45,7 +45,7 @@
           class="button is-primary"
         >跳转</a>
       </li>
-      <li style="margin-left: 12px">
+      <li style="margin-left: 12px" v-if="total">
         <span>
           共 {{total}} 条
         </span>
@@ -71,6 +71,12 @@ export default {
     },
 
     enterPage (event) {
+      this.inputPage = parseInt(this.inputPage)
+
+      if (isNaN(this.inputPage)) {
+        this.inputPage = 1
+      }
+
       if (this.inputPage > this.lastPage) {
         this.inputPage = this.lastPage
       }

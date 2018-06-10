@@ -32,7 +32,7 @@
           @focus="focused.password = true"
           @blur="handlePasswordBlur($event.target.value)"
           @click="message = false"
-          @keyup.enter="submit($event.target.value)"
+          @keyup.enter="handlePasswordBlur($event.target.value), submit()"
           autocomplete="current-password"
           :class="{
             'input':true,
@@ -71,6 +71,10 @@
 export default{
   inject: ['system'],
 
+  props: {
+    test: {}
+  },
+
   data () {
     return {
       params: {
@@ -84,6 +88,7 @@ export default{
         username: false,
         password: false
       },
+
       focused: {
         username: false,
         password: false
@@ -112,7 +117,6 @@ export default{
   methods: {
     submit (value) {
       this.submitted = true
-      this.params.password = value
 
       if (
         this.passwordDanger ||
@@ -138,6 +142,10 @@ export default{
     login (params) {
       this.system.$dispatch('login', params)
     }
+  },
+
+  created () {
+    console.log(this.test)
   }
 }
 </script>

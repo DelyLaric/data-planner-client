@@ -22,22 +22,29 @@ export default {
         data: this.user,
 
         fields: [
-          { class: 'input', name: 'name', title: '姓名', default: user => user.name },
-          { class: 'input', name: 'username', title: '用户名', default: user => user.username, rules: [
-            { name: 'required', message: '用户名不能为空' },
-            { name: 'unique:data._system.users,username', message: '用户名已存在' }
-          ] },
           {
-            class: 'multi-select', name: 'roles_id', title: '用户权限',
-            default: user => user.roles.map(role => role.id),
+            type: 'input', key: 'name',
+            label: '姓名', default: user => user.name
+          },
+          {
+            type: 'input', key: 'username',
+            label: '用户名', default: user => user.username,
+            rules: [
+              { name: 'required', message: '用户名不能为空' },
+              { name: 'unique:data._system.users,username', message: '用户名已存在' }
+            ]
+          },
+          {
+            type: 'multi-select', key: 'roles_id',
+            label: '用户权限', default: user => user.roles.map(role => role.id),
             options: this.dataSource.$state('roles').map(role => ({
-              value: role.id, title: role.name
+              value: role.id, label: role.name
             }))
           }
         ],
 
         submit: {
-          title: '更新用户',
+          label: '更新用户',
           handler: this.handleSubmit
         },
 
@@ -55,8 +62,14 @@ export default {
   methods: {
     updateUser,
 
-    async handleSubmit (fields) {
-      let user = await this.updateUser(this.user.id, fields)
+    async handleSubmit (params) {
+      let user = await this.updateUser(
+        this.user.id,
+        params.map(field => ({
+          name: field.key,
+          value: field.value
+        }))
+      )
       this.users.$commit('updateSelected', user)
       this.$emit('updated')
     }

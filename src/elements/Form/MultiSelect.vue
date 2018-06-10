@@ -1,6 +1,6 @@
 <template>
   <div
-    class="table-container"
+    class="table-container is-unselectable"
     :style="{'max-height': height}"
   >
     <table class="table is-hoverable is-centered is-narrow is-bordered is-fullwidth">
@@ -11,7 +11,7 @@
       <tbody>
         <tr
           v-for="option in options"
-          :key="option.title"
+          :key="option.label"
           :class="{'is-hovered': value.indexOf(option.value) !== -1}"
           style="cursor: pointer;"
           @click="check(option.value)"
@@ -22,7 +22,7 @@
             />
           </td>
           <td>
-            {{option.title}}
+            {{option.label}}
           </td>
         </tr>
       </tbody>

@@ -1,9 +1,14 @@
 import Homepage from './client/Homepage'
-import Users from './Users'
-import MasterPlanner from './planner/master'
-import PartsPlanner from './planner/parts'
 import Login from './client/Login'
+
+import Users from './Users'
 import UserSettings from './UserSettings'
+
+import MasterSchema from './planner/master'
+import PartsSchema from './planner/part'
+import SupplierSchema from './planner/supplier'
+import LineSchema from './planner/line'
+import Management from '@/components/management'
 
 const production = [
   {
@@ -14,12 +19,26 @@ const production = [
   {
     path: '/planner/master',
     name: 'Master Planner',
-    component: MasterPlanner
+    component: Management,
+    props: { schema: MasterSchema }
   },
   {
-    path: '/planner/parts',
+    path: '/planner/part',
     name: 'Parts Planner',
-    component: PartsPlanner
+    component: Management,
+    props: { schema: PartsSchema }
+  },
+  {
+    path: '/planner/supplier',
+    name: 'Supplier Planner',
+    component: Management,
+    props: { schema: SupplierSchema }
+  },
+  {
+    path: '/planner/line',
+    name: 'Line Planner',
+    component: Management,
+    props: { schema: LineSchema }
   }
 ]
 

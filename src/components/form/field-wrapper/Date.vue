@@ -1,6 +1,6 @@
 <template>
   <Field>
-    <Label>{{title}}</Label>
+    <Label>{{label}}</Label>
     <Control>
       <DatePicker
         :value="value"
@@ -22,8 +22,8 @@ export default {
       return this.field._value
     },
 
-    title () {
-      return this.field.title
+    label () {
+      return this.field.label
     },
 
     options () {
@@ -42,10 +42,6 @@ export default {
       return this.field._hasDefault
     },
 
-    defaultOption () {
-      return this.options[0].value
-    },
-
     color () {
       if (this.hasDefault && this.isChanged) return 'primary'
     }
@@ -59,7 +55,7 @@ export default {
 
     reset () {
       this.field._isChanged = !this.hasDefault
-      this.field._value = this.hasDefault ? this.default : this.options[0].value
+      this.field._value = this.hasDefault ? this.default : ''
     },
 
     setValue (value) {

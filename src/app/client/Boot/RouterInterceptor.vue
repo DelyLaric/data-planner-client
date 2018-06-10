@@ -5,7 +5,7 @@ export default {
 
   created () {
     this.$router.beforeEach((to, from, next) => {
-      console.log(to)
+      // console.log(to)
       if (to.name === 'login') {
         next()
         return

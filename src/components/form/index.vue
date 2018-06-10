@@ -2,13 +2,12 @@
   <div class="form">
     <component
       v-for="key in dataSource.result"
-      :is="components[fields[key].class]"
+      :is="components[fields[key].type]"
+      :validation="event !== 'submit'"
       :field="fields[key]"
       :fields="fields"
-      :validation="event !== 'submit'"
       :key="key"
     />
-
     <Field>
       <Control>
         <Button
@@ -17,7 +16,7 @@
           @click="handleSubmit"
           :class="schema.submit.class"
         >
-          {{schema.submit.title}}
+          {{schema.submit.label}}
         </Button>
         <Button
           v-if="schema.reset"
@@ -130,6 +129,7 @@ export default {
     async handleSubmit () {
       // 并发处理所有表单的 validate
       await Promise.all(this.mapFields(async field => {
+        console.log(field)
         if (!field._isValidated) {
           await field._validate()
         }
@@ -161,16 +161,21 @@ function resetForm () {
 function resetField () {
   this.foreachFields(field => {
     field._hasDefault = Boolean(this.data)
+    field._hasData = Boolean(this.data)
     field._default = this.getDefault(field.default)
     field._reset && field._reset()
   })
 }
 
+/*
+ * pipeline of get default value
+ */
+
 function getDefault (value) {
   let type = typeof value
-  if (!this.data) return undefined
+
   if (type === 'undefined') return undefined
-  if (type === 'function') return value(this.data)
+  else if (type === 'function') return value(this.data)
   else return value
 }
 
@@ -187,26 +192,28 @@ function hasErrorField () {
 
 // pure function
 
-function setFieldProps (field) {
-  return Object.assign({
+function wrapFieldProps (field) {
+  return {
     _errors: [],
     _reset: undefined,
     _value: undefined,
     _default: undefined,
-    _validate: () => {},
+    _validate: undefined,
     _isChanged: false,
     _isValidated: true,
     _isLoading: false,
-    _hasDefault: false
-  }, field)
+    _hasDefault: false,
+    _hasData: false,
+    ...field
+  }
 }
 
 function getDataSource (schema) {
   let fields = {}
-  let result = schema.fields.map(field => field.name)
+  let result = schema.fields.map(field => field.key)
 
   result.forEach((name, key) => {
-    fields[name] = setFieldProps(schema.fields[key])
+    fields[name] = wrapFieldProps(schema.fields[key])
   })
 
   return {
@@ -221,7 +228,7 @@ function getSubmitParams () {
   }).map(name => {
     let field = this.dataSource.fields[name]
     return {
-      name: field.name,
+      key: field.key,
       value: this.valueHandler(field._value),
       old_value: this.valueHandler(field._default)
     }

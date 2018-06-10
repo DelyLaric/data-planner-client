@@ -1,7 +1,7 @@
 <template>
   <Field>
     <Label>
-      {{field.title}}
+      {{field.label}}
     </Label>
     <Control>
       <MultiSelect

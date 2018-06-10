@@ -1,6 +1,6 @@
 <template>
   <Field>
-    <Label>{{title}}</Label>
+    <Label>{{label}}</Label>
     <Control
       :hasIconsLeft="hasIconsLeft"
       :hasIconsRight="hasIconsRight"
@@ -78,8 +78,8 @@ export default {
       return this.field.rules
     },
 
-    title () {
-      return this.field.title
+    label () {
+      return this.field.label
     },
 
     errors () {
@@ -168,6 +168,7 @@ function reset () {
 }
 
 function setValue (value) {
+  value = value.trim()
   if (value === '' && !this.validation) {
 
   } else if (value === this.default) {

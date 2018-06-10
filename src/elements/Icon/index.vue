@@ -1,9 +1,12 @@
 <template>
   <span :class="[
-    'icon', 'has-text-' + color, 'is-' + size,
+    'icon', 'has-text-' + color,
     !isLeft || 'is-left', !isRight || 'is-right'
   ]">
-    <i :class="['iconfont', 'icon-' + name]" />
+    <i
+      :class="['iconfont', 'icon-' + name]"
+      :style="{'font-size': size}"
+    />
   </span>
 </template>
 
@@ -15,8 +18,7 @@ export default {
     color,
 
     size: {
-      type: String,
-      default: 'normal'
+      type: String
     },
 
     isLeft: {

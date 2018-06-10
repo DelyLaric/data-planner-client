@@ -1,23 +1,15 @@
 <script>
 export default {
-  template: '',
+  render: () => ({}),
 
-  methods: {
-    initial,
-
-    handleChange (value) {
-      this.field.value = value
-    }
+  props: {
+    field: Object,
+    value: {}
   },
 
   created () {
-    this.$set(this.field, 'initial', this.initial)
-    this.field.initial()
+    this.field._isChanged = true
+    this.field._value = this.field.value
   }
-}
-
-function initial () {
-  this.$set(this.field, 'validated', true)
-  this.$set(this.field, 'errors', [])
 }
 </script>

@@ -11,7 +11,7 @@
         }"
       >
         <!-- 菜单图标 -->
-        <Icon v-if="icon" :name="icon" size="small" />
+        <Icon v-if="icon" :name="icon" />
 
         <span style="margin-left: 6px">
           {{title}}
